@@ -13,8 +13,8 @@ public final class Model {
         return crud;
     }
 
-    public static DeviceCRUD startDeviceCRUD(EntityManager manager){
+    /*public static DeviceCRUD startDeviceCRUD(EntityManager manager){
         HouseCRUD crud = new HouseCRUD(manager);
         return crud;
-    }
+    }*/
 }

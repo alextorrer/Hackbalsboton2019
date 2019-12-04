@@ -29,8 +29,7 @@ public class AreaCRUD {
         model = new SpacesCRUD();
     }
     
-    public HashMap<String, String> getCurrentAreas(){
-        HouseCRUD houseModel = new HouseCRUD(); 
+    public HashMap<String, String> getCurrentAreas(){ 
         HashMap<String,String> currentAreas = new HashMap<>();
         
         

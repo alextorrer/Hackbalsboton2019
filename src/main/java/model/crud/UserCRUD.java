@@ -8,6 +8,7 @@ package model.crud;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import model.bootstraper.EMFBootstrapper;
 import model.schemas.User;
 
@@ -35,6 +36,7 @@ public class UserCRUD {
             manager.close();
         }
     }
+    
 
     public User getUser(String email){
         EntityManager manager = EMFBootstrapper.openEntityManager();
@@ -72,6 +74,29 @@ public class UserCRUD {
                 manager.close();
             }
         }
+    }
+    
+    
+    //Actualizar la contraseña del usuario
+    public void updateUserPassword(User user, String password){
+        EntityManager manager = EMFBootstrapper.openEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        int id = user.getId();
+        
+        try {
+            transaction.begin();
+            Query query = manager.createQuery("update User set Password = '" + password + "' where Id = '" + id + "' " );
+            query.executeUpdate();
+            transaction.commit();
+        }
+        catch(PersistenceException e) {
+            transaction.rollback();
+            throw e;
+            
+        }finally {
+            manager.close();
+        }
+
     }
 
 }

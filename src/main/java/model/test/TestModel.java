@@ -18,7 +18,7 @@ import model.schemas.*;
  * @author Eyder
  */
 public class TestModel {
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         House house = new House("Casa de Pepe");
         HouseCRUD hc = new HouseCRUD();
         hc.createHouse(house);
@@ -36,5 +36,5 @@ public class TestModel {
         for (House house: houses) {
             System.out.println(house.toString());
         }
-    }
+    }*/
 }

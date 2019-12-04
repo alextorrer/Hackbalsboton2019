@@ -15,6 +15,21 @@ public class User {
     private String Email;
     @Column(name = "password", columnDefinition = "LONGTEXT")
     private String Password;
+    
+    @ManyToOne
+    @JoinColumn(name="idquestions")
+    private SecurityQuestion question;
+    
+    @Column(name = "recover_answer")
+    private String Answer;
+
+    public SecurityQuestion getSecurityQuestion() {
+        return question;
+    }
+
+    public void setQuestion(SecurityQuestion question) {
+        this.question = question;
+    }
 
     public User(){}
 
@@ -50,6 +65,14 @@ public class User {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getAnswer() {
+        return Answer;
+    }
+
+    public void setAnswer(String Answer) {
+        this.Answer = Answer;
     }
 
     @Override

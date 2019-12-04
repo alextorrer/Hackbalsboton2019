@@ -8,16 +8,10 @@ import view.Login;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.*;
+import javax.persistence.NoResultException;
 
 public class Login_Controller {
 
-    //Test model connection
-    public static void main(String args[]){
-        UserCRUD model = new UserCRUD();
-        User user;
-        user = model.getUser("Axel@lol.com");
-        System.out.println(user.toString());
-    }
 
     //Validates the input and send it to the model
     public void LoginUser(Login view) throws EmptyException {
@@ -27,7 +21,7 @@ public class Login_Controller {
 
         Map<String, String> data = new HashMap<>();
         data.put("email", view.getEmailText());
-        data.put("password", view.getPasswordText());
+        data.put("password", String.valueOf(view.getPasswordText()));
 
         if (!validCompleteness(data))
         {
@@ -48,9 +42,11 @@ public class Login_Controller {
     //Verify the password
     public void validateLogin(Map<String,String> data, User user, Login view){
         if(user.getPassword().equals(data.get("password"))){
-            JOptionPane.showMessageDialog(
-                    view, "Login success" , "Success", JOptionPane.INFORMATION_MESSAGE);
+            view.EnterHome();
+        }else{
+             throw new NoResultException();
         }
+        
     }
 
     //Display an OptionPane in the view with the error
@@ -58,9 +54,9 @@ public class Login_Controller {
         if(ex instanceof EmptyException){
             JOptionPane.showMessageDialog(
                     view, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof SQLException){
+        }else if(ex instanceof NoResultException){
             JOptionPane.showMessageDialog(
-                    view, "Database error" , "ERROR", JOptionPane.ERROR_MESSAGE);
+                    view, "Wrong email/password" , "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(
                     view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -79,6 +75,8 @@ public class Login_Controller {
 
         return isComplete;
     }
+    
+    
 }
 
 

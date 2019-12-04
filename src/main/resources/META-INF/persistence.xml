@@ -13,12 +13,12 @@
         <class>model.schemas.Area</class>
 
         <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://b30f87db7a90d7:68ce5f94@us-cdbr-iron-east-05.cleardb.net/heroku_1e2ec3bf7447cde?reconnect=true"/> <!--db url-->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/> 
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.229.149:3306/domotica_poo?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/> <!--db url-->
-            <property name="javax.persistence.jdbc.user" value="pepe"/> <!--db username-->
-            <property name="javax.persistence.jdbc.password" value="pepe"/> <!--db password-->
+            <property name="javax.persistence.jdbc.user" value="b30f87db7a90d7"/> <!--db username-->
+            <property name="javax.persistence.jdbc.password" value="68ce5f94"/> <!--db password-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
 </persistence>

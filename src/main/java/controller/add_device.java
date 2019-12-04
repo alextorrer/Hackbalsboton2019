@@ -91,8 +91,8 @@ public class add_device
    //ndispositivo.setName(view.getNombre()); //Cambien los metodos que no existen por los String que me deben de enviar desdde el view
    //ndispositivo.setType(view.getTipo()); //Cambien los metodos que no existen por los String que me deben de enviar desdde el view
 
-   DeviceCRUD crudnd = new DeviceCRUD();
-   crudnd.createDevice(ndispositivo);
+   //DeviceCRUD crudnd = new DeviceCRUD();
+   //crudnd.createDevice(ndispositivo);
   }
  }
 }

@@ -3,7 +3,9 @@ package controller;
 
 //recibe,valida y envia los parametros para agregar un usuario
 
+import controller.exceptions.AlreadyRegisteredException;
 import controller.exceptions.EmptyException;
+import controller.exceptions.NoMatchException;
 import controller.exceptions.NotEmailException;
 import model.crud.UserCRUD;
 import model.schemas.User;
@@ -13,17 +15,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import model.crud.QuestionsCRUD;
 import model.schemas.SecurityQuestion;
 
 public class add_user 
 {
+    
+    UserCRUD model;
+    
+    public add_user(){
+        this.model = new UserCRUD();
+    }
 
-    public void nuevo_usuario(Register view) throws EmptyException, NotEmailException{   
+    public void nuevo_usuario(Register view) throws EmptyException, NotEmailException,AlreadyRegisteredException,NoMatchException{   
      User user = new User();
-     UserCRUD model = new UserCRUD();
-     
+ 
      Map<String, String> data = new HashMap<>();
      data.put("nombre", view.getNombre());
      data.put("correo", view.getCorreo());
@@ -40,7 +48,15 @@ public class add_user
             
             throw new NotEmailException();
             
-        }else{
+        }else if(validExistingEmail(data.get("correo"), view)){
+            
+            throw new AlreadyRegisteredException();
+            
+        }else if(!data.get("contrasena").equals(data.get("conf_contrasena"))){
+            
+            throw new NoMatchException();
+        }
+        else{
             
             try{
                 
@@ -82,10 +98,19 @@ public class add_user
         }else if(ex instanceof NotEmailException){
             JOptionPane.showMessageDialog(
                     view, "Please enter a valid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof AlreadyRegisteredException){
+            JOptionPane.showMessageDialog(
+                    view, "Email already registered" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoMatchException){
+            JOptionPane.showMessageDialog(
+                    view, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoResultException){
+            
         }
         else{
             JOptionPane.showMessageDialog(
                     view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 
@@ -100,5 +125,23 @@ public class add_user
         }
 
         return isComplete;
+    }
+    
+    public boolean validExistingEmail(String email, Register view){
+        boolean exists = false;
+        User user;
+        
+        try{
+            
+            user = model.getUser(email);
+            if(user!=null){
+                exists = true;
+            }
+            
+        }catch(Exception ex){
+            showError(ex, view);
+        }
+        
+        return exists;
     }
 }       

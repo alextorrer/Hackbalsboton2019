@@ -95,7 +95,7 @@ public class SecurityQuestion_Controller {
             JOptionPane.showMessageDialog(
                     view, "Wrong answer" , "ERROR", JOptionPane.ERROR_MESSAGE);
         }else if(ex instanceof NullPointerException){
-            
+
         }
         else{
             JOptionPane.showMessageDialog(

@@ -35,8 +35,8 @@ public class add_user
      Map<String, String> data = new HashMap<>();
      data.put("nombre", view.getNombre());
      data.put("correo", view.getCorreo());
-     data.put("contrasena", view.getContrasena());
-     data.put("conf_contrasena", view.getConfcontrasena());
+     data.put("contrasena", String.valueOf(view.getContrasena()));
+     data.put("conf_contrasena", String.valueOf(view.getConfcontrasena()));
      data.put("question", view.getSelectedQuestion());
      data.put("answer", view.getAnswer());
      

@@ -268,11 +268,11 @@ add_user Reg = new add_user();
      public String getCorreo(){
         return jTextField2.getText();
     }
-     public String getContrasena(){
-        return jPasswordField1.getText();
+     public char[] getContrasena(){
+        return jPasswordField1.getPassword();
     }
-     public String getConfcontrasena(){
-        return jPasswordField2.getText();
+     public char[] getConfcontrasena(){
+        return jPasswordField2.getPassword();
     }
 
     public String getAnswer() {

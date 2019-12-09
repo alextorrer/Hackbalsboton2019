@@ -8,7 +8,9 @@ package view;
 import controller.Login_Controller;
 import controller.exceptions.EmptyException;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
+import org.hibernate.exception.JDBCConnectionException;
 
 
 /**
@@ -244,10 +246,16 @@ public class Login extends javax.swing.JFrame {
         if(ex instanceof EmptyException){
             JOptionPane.showMessageDialog(
                     this, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            JOptionPane.showMessageDialog(
+        }else if(ex instanceof PersistenceException){
+            if(ex instanceof NoResultException){
+                JOptionPane.showMessageDialog(
                     this, "Wrong email/password" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else{
+            }else if(ex instanceof JDBCConnectionException){
+                JOptionPane.showMessageDialog(
+                    this, "Could not connect, try again later" , "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
             JOptionPane.showMessageDialog(
                     this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
         }

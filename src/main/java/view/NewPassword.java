@@ -11,6 +11,7 @@ import controller.exceptions.NoMatchException;
 import controller.exceptions.OlderPasswordException;
 import javax.swing.JOptionPane;
 import model.schemas.User;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -229,7 +230,10 @@ public class NewPassword extends javax.swing.JFrame {
         }else if(ex instanceof NoMatchException){
             JOptionPane.showMessageDialog(
                     this, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        }else if(ex instanceof JDBCConnectionException){
+                JOptionPane.showMessageDialog(
+                    this, "Could not connect, try again later" , "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         else{
             JOptionPane.showMessageDialog(
                     this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);

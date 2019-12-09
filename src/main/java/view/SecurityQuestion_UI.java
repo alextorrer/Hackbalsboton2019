@@ -10,9 +10,11 @@ import controller.exceptions.EmptyException;
 import controller.exceptions.NotEmailException;
 import controller.exceptions.WrongAnswerException;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.schemas.User;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -230,14 +232,19 @@ public class SecurityQuestion_UI extends javax.swing.JFrame {
         }else if(ex instanceof NotEmailException){
             JOptionPane.showMessageDialog(
                     this, "Invalid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            JOptionPane.showMessageDialog(
-                    this, "Unregistered email" , "ERROR", JOptionPane.ERROR_MESSAGE);
         }else if(ex instanceof WrongAnswerException){
             JOptionPane.showMessageDialog(
                     this, "Wrong answer" , "ERROR", JOptionPane.ERROR_MESSAGE);
         }else if(ex instanceof NullPointerException){
 
+        }else if(ex instanceof PersistenceException){
+            if(ex instanceof NoResultException){
+                JOptionPane.showMessageDialog(
+                    this, "Unregistered email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+            }else if(ex instanceof JDBCConnectionException){
+                JOptionPane.showMessageDialog(
+                    this, "Could not connect, try again later" , "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
         else{
             JOptionPane.showMessageDialog(

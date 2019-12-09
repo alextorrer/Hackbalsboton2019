@@ -17,9 +17,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.schemas.SecurityQuestion;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -339,8 +341,13 @@ add_user Reg = new add_user();
         }else if(ex instanceof NoMatchException){
             JOptionPane.showMessageDialog(
                     this, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            
+        }else if(ex instanceof PersistenceException){
+            if(ex instanceof NoResultException){
+                
+            }else if(ex instanceof JDBCConnectionException){
+                JOptionPane.showMessageDialog(
+                    this, "Could not connect, try again later" , "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
         else{
             JOptionPane.showMessageDialog(

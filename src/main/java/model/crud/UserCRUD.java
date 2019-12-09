@@ -33,7 +33,7 @@ public class UserCRUD {
 
     public User getUser(String email)throws PersistenceException{
         EntityManager manager = EMFBootstrapper.openEntityManager();
-        User user = new User();
+        User user;
 
         user = (User) manager.createQuery("from User u where u.Email='" + email + "'").getSingleResult();
         return user;

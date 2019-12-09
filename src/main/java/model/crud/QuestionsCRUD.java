@@ -24,50 +24,36 @@ public class QuestionsCRUD {
     }
     
     //Añadir una pregunta nueva
-    public void createQuestion(SecurityQuestion question){
+    public void createQuestion(SecurityQuestion question)throws PersistenceException{
         EntityManager manager = EMFBootstrapper.openEntityManager();
         EntityTransaction transaction = manager.getTransaction();
-        try {
+
             transaction.begin();
             manager.persist(question);
             transaction.commit();
-            System.out.printf("se ha aÃ±adido con exito");
-        }
-        catch(PersistenceException e) {
-            transaction.rollback();
-            throw e;
-        }
-        finally {
-            manager.close();
-        }
+            System.out.printf("se ha añadido con exito");
+
     }
     
     //Obtener una pregunta (objeto)
-    public SecurityQuestion getQuestionObject(String question){
+    public SecurityQuestion getQuestionObject(String question)throws PersistenceException{
         EntityManager manager = EMFBootstrapper.openEntityManager();
         SecurityQuestion questionObj;
-        try {
+        
             questionObj = (SecurityQuestion) manager.createQuery("from SecurityQuestion u where u.question='" + question + "'").getSingleResult();
-        }
-        catch(PersistenceException e) {
-            throw e;
-        }
+
 
         return questionObj;
     }
     
     //Obtener todas las preguntas (objetos)
-    public List<SecurityQuestion> getQuestionsObjects(){
+    public List<SecurityQuestion> getQuestionsObjects()throws PersistenceException{
         List<SecurityQuestion> questions;
         EntityManager manager = EMFBootstrapper.openEntityManager();
-        
-        try{
+
             questions = manager.createQuery("from SecurityQuestion", SecurityQuestion.class).getResultList();
             
-        }
-        catch(PersistenceException ex){
-            throw ex;
-        }
+
         return questions;
     }
 }

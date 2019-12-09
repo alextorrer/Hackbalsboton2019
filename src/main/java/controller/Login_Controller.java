@@ -5,8 +5,6 @@ import model.crud.UserCRUD;
 import model.schemas.User;
 import view.Login;
 
-import javax.swing.*;
-import java.sql.SQLException;
 import java.util.*;
 import javax.persistence.NoResultException;
 
@@ -33,7 +31,7 @@ public class Login_Controller {
                 user = model.getUser(data.get("email"));
                 validateLogin(data, user, view);
             }catch(Exception ex){
-                showError(ex, view);
+                view.showError(ex);
             }
 
         }
@@ -47,20 +45,6 @@ public class Login_Controller {
              throw new NoResultException();
         }
         
-    }
-
-    //Display an OptionPane in the view with the error
-    public void showError(Exception ex, Login view){
-        if(ex instanceof EmptyException){
-            JOptionPane.showMessageDialog(
-                    view, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            JOptionPane.showMessageDialog(
-                    view, "Wrong email/password" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(
-                    view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     //Validate that there is no empty information

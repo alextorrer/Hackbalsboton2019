@@ -69,50 +69,20 @@ public class add_user
                 model.createUser(user);
                 
             }catch(Exception ex){
-                showError(ex, view);
+                view.showError(ex);
             }
 
         }
 
     }
- 
-    //JOptionPane si todo salió bien
-    public void showSuccess(Register view){
-        JOptionPane.showMessageDialog(
-                    view, "Registered successfully" , "Registered", JOptionPane.INFORMATION_MESSAGE);
-        
-        view.returnToLogin();
-    }
-  
+
  
     //Obtener de model la lista con las preguntas
     public List<SecurityQuestion> getQuestionsFromController(){
         return new QuestionsCRUD().getQuestionsObjects();
     }
     
-    //Display an OptionPane in the view with the error
-    public void showError(Exception ex, Register view){
-        if(ex instanceof EmptyException){
-            JOptionPane.showMessageDialog(
-                    view, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NotEmailException){
-            JOptionPane.showMessageDialog(
-                    view, "Please enter a valid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof AlreadyRegisteredException){
-            JOptionPane.showMessageDialog(
-                    view, "Email already registered" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoMatchException){
-            JOptionPane.showMessageDialog(
-                    view, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            
-        }
-        else{
-            JOptionPane.showMessageDialog(
-                    view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        }
-    }
+    
 
     //Validate that there is no empty information
     public int validCompleteness(Map<String,String> data){
@@ -139,7 +109,7 @@ public class add_user
             }
             
         }catch(Exception ex){
-            showError(ex, view);
+            view.showError(ex);
         }
         
         return exists;

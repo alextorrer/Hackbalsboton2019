@@ -9,10 +9,15 @@ import controller.Login_Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.add_user;
+import controller.exceptions.AlreadyRegisteredException;
 import controller.exceptions.EmptyException;
+import controller.exceptions.NoMatchException;
+import controller.exceptions.NotEmailException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.schemas.SecurityQuestion;
 
@@ -232,10 +237,10 @@ add_user Reg = new add_user();
     
      try {
          Reg.nuevo_usuario(this);
-         Reg.showSuccess(this);
+         showSuccess();
 
      } catch (Exception ex) {
-         Reg.showError(ex, this);
+         showError(ex);
      }
 
      
@@ -319,4 +324,36 @@ add_user Reg = new add_user();
         new Login().setVisible(true);
         this.dispose();
      }
+     
+     //Display an OptionPane in the view with the error
+    public void showError(Exception ex){
+        if(ex instanceof EmptyException){
+            JOptionPane.showMessageDialog(
+                    this, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NotEmailException){
+            JOptionPane.showMessageDialog(
+                    this, "Please enter a valid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof AlreadyRegisteredException){
+            JOptionPane.showMessageDialog(
+                    this, "Email already registered" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoMatchException){
+            JOptionPane.showMessageDialog(
+                    this, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoResultException){
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(
+                    this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+    
+    //JOptionPane si todo salió bien
+    public void showSuccess(){
+        JOptionPane.showMessageDialog(
+                    this, "Registered successfully" , "Registered", JOptionPane.INFORMATION_MESSAGE);
+        
+        this.returnToLogin();
+    }
 }

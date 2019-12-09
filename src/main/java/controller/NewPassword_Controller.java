@@ -8,7 +8,6 @@ import controller.exceptions.OlderPasswordException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.JOptionPane;
 import model.crud.UserCRUD;
 import model.schemas.User;
 import view.NewPassword;
@@ -54,37 +53,12 @@ public class NewPassword_Controller {
                 
             }
             catch(Exception ex){
-                showError(ex,view);
+                view.showError(ex);
             }
         }
      
     }
     
-    public void showError(Exception ex, NewPassword view){
-        if(ex instanceof EmptyException){
-            JOptionPane.showMessageDialog(
-                    view, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof OlderPasswordException){
-            JOptionPane.showMessageDialog(
-                    view, "You must enter a new password" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoMatchException){
-            JOptionPane.showMessageDialog(
-                    view, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(
-                    view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
-            
-        }
-    }
-    
-    
-    public void showSuccess(NewPassword view){
-        JOptionPane.showMessageDialog(
-                    view, "New password created" , "Updated", JOptionPane.INFORMATION_MESSAGE);
-        
-        view.returnToLogin();
-    }
     
      //Validate that there is no empty information
     public int validCompleteness(Map<String,String> data){

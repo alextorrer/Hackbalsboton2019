@@ -6,6 +6,9 @@
 package view;
 
 import controller.Login_Controller;
+import controller.exceptions.EmptyException;
+import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -148,7 +151,7 @@ public class Login extends javax.swing.JFrame {
             
       
         } catch (Exception ex) {
-            Log.showError(ex, this);
+            showError(ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -233,11 +236,22 @@ public class Login extends javax.swing.JFrame {
       homee.setVisible(true);
       this.dispose();
     }
+
+    
+    
+       //Display an OptionPane in the view with the error
+    public void showError(Exception ex){
+        if(ex instanceof EmptyException){
+            JOptionPane.showMessageDialog(
+                    this, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoResultException){
+            JOptionPane.showMessageDialog(
+                    this, "Wrong email/password" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(
+                    this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 

@@ -47,7 +47,7 @@ public class SecurityQuestion_Controller {
                 userQuestion = question.getQuestion();
             }
             catch(Exception e){
-                showError(e,view);
+                view.showError(e);
             }
 
         }
@@ -75,31 +75,10 @@ public class SecurityQuestion_Controller {
             }
             
         }catch(Exception ex){
-            showError(ex, view);
+            view.showError(ex);
         }
     }
     
     
     
-    public void showError(Exception ex, SecurityQuestion_UI view){
-        if(ex instanceof EmptyException){
-            JOptionPane.showMessageDialog(
-                    view, "You must provide an email" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NotEmailException){
-            JOptionPane.showMessageDialog(
-                    view, "Invalid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NoResultException){
-            JOptionPane.showMessageDialog(
-                    view, "Unregistered email" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof WrongAnswerException){
-            JOptionPane.showMessageDialog(
-                    view, "Wrong answer" , "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else if(ex instanceof NullPointerException){
-
-        }
-        else{
-            JOptionPane.showMessageDialog(
-                    view, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 }

@@ -8,6 +8,8 @@ package view;
 import controller.SecurityQuestion_Controller;
 import controller.exceptions.EmptyException;
 import controller.exceptions.NotEmailException;
+import controller.exceptions.WrongAnswerException;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.schemas.User;
@@ -140,7 +142,7 @@ public class SecurityQuestion_UI extends javax.swing.JFrame {
             question = controller.getQuestionByEmail(email_tf.getText(), this);        
         }
         catch(Exception ex){
-            controller.showError(ex, this);
+            showError(ex);
         }
         
         //Si se encontró la pregunta
@@ -209,7 +211,7 @@ public class SecurityQuestion_UI extends javax.swing.JFrame {
             controller.validateAnswer(answer, email, this);
         }
         catch(Exception ex){
-            controller.showError(ex, this);
+            showError(ex);
         }
     }
     
@@ -218,5 +220,28 @@ public class SecurityQuestion_UI extends javax.swing.JFrame {
         nextview.setVisible(true);
         nextview.setUser(user);
         this.dispose();
+    }
+    
+    
+    public void showError(Exception ex){
+        if(ex instanceof EmptyException){
+            JOptionPane.showMessageDialog(
+                    this, "You must provide an email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NotEmailException){
+            JOptionPane.showMessageDialog(
+                    this, "Invalid email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoResultException){
+            JOptionPane.showMessageDialog(
+                    this, "Unregistered email" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof WrongAnswerException){
+            JOptionPane.showMessageDialog(
+                    this, "Wrong answer" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NullPointerException){
+
+        }
+        else{
+            JOptionPane.showMessageDialog(
+                    this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

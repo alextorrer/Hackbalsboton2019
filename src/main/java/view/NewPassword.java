@@ -6,6 +6,10 @@
 package view;
 
 import controller.NewPassword_Controller;
+import controller.exceptions.EmptyException;
+import controller.exceptions.NoMatchException;
+import controller.exceptions.OlderPasswordException;
+import javax.swing.JOptionPane;
 import model.schemas.User;
 
 /**
@@ -133,10 +137,10 @@ public class NewPassword extends javax.swing.JFrame {
         
         try{
             control.createNewPassword(this, actualUser);
-            control.showSuccess(this);
+            showSuccess();
         }
         catch(Exception ex){
-            control.showError(ex, this);
+            showError(ex);
         }
     }//GEN-LAST:event_confirm_btnActionPerformed
 
@@ -214,4 +218,31 @@ public class NewPassword extends javax.swing.JFrame {
         new Login().setVisible(true);
         this.dispose();
     }
+    
+    public void showError(Exception ex){
+        if(ex instanceof EmptyException){
+            JOptionPane.showMessageDialog(
+                    this, "You must fill every text field" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof OlderPasswordException){
+            JOptionPane.showMessageDialog(
+                    this, "You must enter a new password" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if(ex instanceof NoMatchException){
+            JOptionPane.showMessageDialog(
+                    this, "Passwords dont match" , "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(
+                    this, "Unexpected error", "ERROR", JOptionPane.ERROR_MESSAGE);
+            
+        }
+    }
+    
+    
+    public void showSuccess(){
+        JOptionPane.showMessageDialog(
+                    this, "New password created" , "Updated", JOptionPane.INFORMATION_MESSAGE);
+        
+        this.returnToLogin();
+    }
+    
 }
